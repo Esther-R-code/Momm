@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1631764432329.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "948979333",
+    "id" : "E75C9A29",
+    "lastKnownWriteTime" : 1631764468,
+    "last_content_update" : 1631764468675,
+    "path" : "/media/minchi/新增磁碟區/minchi/Mediation/package/momm/R/mean_PSE_U.R",
+    "project_path" : "R/mean_PSE_U.R",
+    "properties" : {
+        "cursorPosition" : "32,181",
+        "scrollLine" : "19"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

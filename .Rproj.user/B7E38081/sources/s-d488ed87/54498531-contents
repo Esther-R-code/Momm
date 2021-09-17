@@ -1,0 +1,40 @@
+
+############R Documentation###############
+library(devtools)
+library(roxygen2)
+setwd("/media/minchi/新增磁碟區/minchi/Mediation/package/momm")
+roxygenize()
+
+###################install#########################
+setwd("/media/minchi/新增磁碟區/minchi/Mediation/package")
+library(Momm)
+
+help("rho")
+help("Ord_mediation_analysis_pal_sc")
+help("rd_ord")
+#######################Terminal common line#######################
+echo "# momm" >> README.md
+## initialization
+git init
+## add file
+git add .
+## commit "words want to note"
+git commit -m "1 upload"
+## branch: create, rename, delete
+git branch -m main
+# create a node URL and names it as momm1
+git remote add momm1 https://github.com/Esther-R-code/Momm.git
+# push file to node
+git push -u momm1 main
+
+##
+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
+
+##########remove a package#####
+rm(list=ls())
+detach("package:Momm",unload = T)
+remove.packages("Momm")
+
+#######install from github#############
+install_github('Esther-R-code/Momm')
+

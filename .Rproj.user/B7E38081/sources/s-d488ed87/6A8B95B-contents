@@ -1,0 +1,21 @@
+load("/media/minchi/新增磁碟區/minchi/HCV/hcvpmblood/pm25_int/With_TCHO/logHDL/cpgtp_hcvpmblood_pm25int_tcho_0715.Rdata")
+setwd("/media/minchi/新增磁碟區/minchi/HCV/hcvpmblood/pm25_int/With_TCHO/logHDL/me_fdr02/me_result")
+gene_df_compN_hcvpm25int_HDL_02<-read.csv(file="gene_df_compN_hcvpm25int_HDL_02.csv")
+sig_id_all<-match(gene_df_compN_hcvpm25int_HDL_02$cpg_site, rownames(cpgtp_hcvpmblood_pm25int_tcho_0715))
+
+
+load("/media/minchi/新增磁碟區/minchi/HCV/pmcate/pm25/25int_tcho/yel/logHDL/compN_pm25intyel_HDLtcho_0728.Rdata")
+load("/media/minchi/新增磁碟區/minchi/HCV/pmcate/pm25/25int_tcho/org/logHDL/compN_pm25intorg_HDLtcho.Rdata")
+load("/media/minchi/新增磁碟區/minchi/HCV/hcvpmblood/pm25_int/With_TCHO/logHDL/betaM_all_pm25int_hdltcho_0715.Rdata")
+load("/media/minchi/新增磁碟區/minchi/HCV/hcvpmblood/pm25_int/With_TCHO/Methy/alphahcv_all_pm25int_hdltcho_0715.Rdata")
+load("/media/minchi/新增磁碟區/minchi/HCV/pmcate/pm25/25int_tcho/yel/logHDL/betaM_yel_pm25int_hdltcho_0728.Rdata")
+load("/media/minchi/新增磁碟區/minchi/HCV/pmcate/pm25/25int_tcho/yel/Methy/alphahcv_yel_pm25int_hdltcho_0728.Rdata")
+load("/media/minchi/新增磁碟區/minchi/HCV/pmcate/pm25/25int_tcho/org/Methy/alphahcv_org_pm25int_hdltcho_0722.Rdata")
+load("/media/minchi/新增磁碟區/minchi/HCV/pmcate/pm25/25int_tcho/org/logHDL/betaM_org_pm25int_hdltcho_0715.Rdata")
+
+me_siginall_df<-data.frame(gene_names=gene_df_compN_hcvpm25int_HDL_02$gene_name,
+                           Mediation_Effect_all=alpha_hcv_all_temp[sig_id_all]*betaM_all[sig_id_all],p_value_all=gene_df_compN_hcvpm25int_HDL_02$p_value,
+                           Mediation_Effect_yel=alpha_hcv_yel_temp[sig_id_all]*betaM_yel[sig_id_all],p_value_yel=compN_pm25intyel_HDLtcho_0728[,1][sig_id_all],
+                           Mediation_Effect_org=alpha_hcv_org_temp[sig_id_all]*betaM_org[sig_id_all],p_value_org=compN_pm25intorg_HDLtcho[,1][sig_id_all])
+rownames(me_siginall_df)<-gene_df_compN_hcvpm25int_HDL_02$cpg_site
+save(me_siginall_df,file="/media/minchi/新增磁碟區/minchi/HCV/hcvpmblood/pm25_int/With_TCHO/logHDL/me_fdr02/me_siginall_pm25int_02.Rdata")
