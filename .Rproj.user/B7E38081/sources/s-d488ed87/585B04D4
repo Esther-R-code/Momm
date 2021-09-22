@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1632280770691.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "585B04D4",
+    "lastKnownWriteTime" : 1631505626,
+    "last_content_update" : 1631505626,
+    "path" : "/media/minchi/新增磁碟區/minchi/Mediation/package/momm/R/Ord_mediation_analysis_pal.R",
+    "project_path" : "R/Ord_mediation_analysis_pal.R",
+    "properties" : {
+        "cursorPosition" : "38,0",
+        "scrollLine" : "26"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
