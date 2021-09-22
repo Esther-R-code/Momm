@@ -13,13 +13,13 @@ rho(TH, SH, Name = c("W", "Q", "S"), n_cate1, a, w, confounders = NULL)
 
 \item{Name}{names of exposure and mediators, def:c("W","Q","S")}
 
+\item{n_cate1}{the number of categories of the outcome minus 1}
+
 \item{a}{the value of outcome}
 
 \item{w}{the values of intervention}
 
 \item{confounders}{the values of confounders, def:NULL}
-
-\item{n_cate1:}{the number of categories of the outcome minus 1}
 }
 \value{
 the probability of the counterfactual outcome

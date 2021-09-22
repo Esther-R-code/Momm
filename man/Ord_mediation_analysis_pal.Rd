@@ -15,19 +15,19 @@ Ord_mediation_analysis_pal(
 )
 }
 \arguments{
-\item{Indata:}{Input data with outcome, exposure, mediators, and covariates as columns. The number of rows equals to the number of people in the data you used.}
+\item{Indata}{Input data with outcome, exposure, mediators, and covariates as columns. The number of rows equals to the number of people in the data you used.}
 
-\item{n_cate:}{the number of categories of the outcome}
+\item{n_cate}{the number of categories of the outcome}
 
-\item{confounders:}{the values of confounder}
+\item{confounders}{the values of confounder}
 
-\item{intv:}{number of interventions. Default is 4 and only 4.}
+\item{intv}{number of interventions. Default is 4 and only 4.}
 
-\item{intval:}{the values of exposure used for intervention. Default is c(0,1).}
+\item{intval}{the values of exposure used for intervention. Default is c(0,1).}
 
-\item{nb:}{Number of bootstrapping. Default is 0 (i.e. no bootstrapping applied).}
+\item{nb}{Number of bootstrapping replicates. Default is 0 (i.e. no bootstrapping applied).}
 
-\item{n_core:}{number of cores that will be used in parallel computing. default=1}
+\item{n_core}{number of cores that will be used in parallel computing. default=1}
 }
 \value{
 PSE: a table with the following values in the row; columns store the values for different categories of the outcome
@@ -61,6 +61,12 @@ lower(RRWY): the lower bound of the confidence interval the PSE of path from W t
 upper(RRWY): the upper bound of the confidence interval the PSE of path from W to Y under the risk ratio scale
 
 pv(RRWY): the p-value of the PSE of path from W to Y under the risk ratio scale
+
+lower_b(RDWY): the lower bound of the confidence interval for the PSE of the path from W to Y under the risk difference scale that produce by bootstrapping
+
+upper_b(RDWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
+
+pv_b(RDWY): the p-value of the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
 
 Note: other return values with the similar names are for the path from W through Q to Y  or through  S, or through both
 }

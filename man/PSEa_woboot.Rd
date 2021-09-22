@@ -5,7 +5,6 @@
 \title{PSE without bootstrap}
 \usage{
 PSEa_woboot(
-  data_boot,
   Para,
   n_para,
   n_cate,
@@ -41,8 +40,6 @@ PSEa_woboot(
 \item{confounders}{the values of confounders, def:c()}
 
 \item{a}{the value of outcome}
-
-\item{data.boot}{the data set}
 }
 \value{
 p0000: the probability of the counterfactual outcome of the outcome under the intervention=(0,0,0,0)

@@ -46,9 +46,9 @@ PSEa_wiboot_c(
 
 \item{a}{the value of outcome}
 
-\item{nb:}{number of bootstrapping; Default=0}
+\item{nb}{number of bootstrapping replicates; Default=0}
 
-\item{n_core:}{number of cores that will be used}
+\item{n_core}{number of cores that will be used}
 }
 \value{
 p0000: the probability of the counterfactual outcome of the outcome under the intervention=(0,0,0,0)
@@ -67,21 +67,27 @@ total RR: the total effect under the risk ratio scale
 
 RD W>Y: the PSE of path from W to Y under the risk difference scale
 
-lower(RDWY): the lower bound of the confidence interval the PSE of path from W to Y under the risk difference scale
+lower(RDWY): the lower bound of the confidence interval for the PSE of path from W to Y under the risk difference scale
 
-upper(RDWY): the upper bound of the confidence interval the PSE of path from W to Y under the risk difference scale
+upper(RDWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk difference scale
 
 pv(RDWY): the p-value of the PSE of path from W to Y under the risk difference scale
 
+lower_b(RDWY): the lower bound of the confidence interval for the PSE of the path from W to Y under the risk difference scale that produce by bootstrapping
+
+upper_b(RDWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
+
+pv_b(RDWY): the p-value of the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
+
 RR W>Y: the PSE of path from W to Y under the risk ratio scale
 
-lower(RRWY): the lower bound of the confidence interval the PSE of path from W to Y under the risk ratio scale
+lower(RRWY): the lower bound of the confidence interval for the PSE of path from W to Y under the risk ratio scale
 
-upper(RRWY): the upper bound of the confidence interval the PSE of path from W to Y under the risk ratio scale
+upper(RRWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk ratio scale
 
 pv(RRWY): the p-value of the PSE of path from W to Y under the risk ratio scale
 
-other return values with the similar names are for the path from W through Q to Y  or through  S, or through both
+Note: other return values with the similar names are for the path from W through Q to Y  or through  S, or through both
 }
 \description{
 PSE with bootstrap

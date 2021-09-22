@@ -11,7 +11,7 @@ create_vcovmatrix(out.reg, s.reg, q.reg)
 
 \item{s.reg}{the output of the R functiom 'lm' under the model of 'S' (the 2nd medistor)}
 
-\item{q.red}{the output of the R function 'lm' under the model of 'Q' (the 1st medistor)}
+\item{q.reg}{the output of the R function 'lm' under the model of 'Q' (the 1st medistor)}
 }
 \description{
 create the variance-covariance matrix of theta
