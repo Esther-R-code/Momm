@@ -1,13 +1,13 @@
 #' Apply mediation analysis for non-rare orinal/multinomial outcome with two gaussian mediators.
 #' Before using this function, please make sure the R packages "ordinal" and "parallel" have been install and libraries.
 #' @title Ord_mediation_analysis
-#' @param Indata: Input data with outcome, exposure, mediators, and covariates as columns. The number of rows equals to the number of people in the data you used.
-#' @param n_cate: the number of categories of the outcome
-#' @param confounders: the values of confounder
-#' @param intv: number of interventions. Default is 4 and only 4.
-#' @param intval: the values of exposure used for intervention. Default is c(0,1).
-#' @param nb: Number of bootstrapping. Default is 0 (i.e. no bootstrapping applied).
-#' @param n_core: number of cores that will be used in parallel computing. default=1
+#' @param Indata Input data with outcome, exposure, mediators, and covariates as columns. The number of rows equals to the number of people in the data you used.
+#' @param n_cate the number of categories of the outcome
+#' @param confounders the values of confounder
+#' @param intv number of interventions. Default is 4 and only 4.
+#' @param intval the values of exposure used for intervention. Default is c(0,1).
+#' @param nb Number of bootstrapping replicates. Default is 0 (i.e. no bootstrapping applied).
+#' @param n_core number of cores that will be used in parallel computing. default=1
 #' @export Ord_mediation_analysis_pal
 #' @examples
 #' library(ordinal)
@@ -53,10 +53,13 @@
 #' @return lower(RRWY): the lower bound of the confidence interval the PSE of path from W to Y under the risk ratio scale
 #' @return upper(RRWY): the upper bound of the confidence interval the PSE of path from W to Y under the risk ratio scale
 #' @return pv(RRWY): the p-value of the PSE of path from W to Y under the risk ratio scale
+#' @return lower_b(RDWY): the lower bound of the confidence interval for the PSE of the path from W to Y under the risk difference scale that produce by bootstrapping
+#' @return upper_b(RDWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
+#' @return pv_b(RDWY): the p-value of the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
 #' @return Note: other return values with the similar names are for the path from W through Q to Y  or through  S, or through both
 Ord_mediation_analysis_pal=function(Indata, n_cate, confounders, intv=4, intval=c(0,1), nb=0, n_core=1){
-  library(ordinal)
-  library(parallel)
+  #library(ordinal)
+  #library(parallel)
   colnames(Indata)[1:4]<-c("Y","W","Q","S")
   if(n_cate!=length(names(summary(Indata$Y)))){stop("please make sure 'n_cate' is equal to the number of categories of the outcome!")}
   n_cate1<-n_cate-1
@@ -72,7 +75,7 @@ Ord_mediation_analysis_pal=function(Indata, n_cate, confounders, intv=4, intval=
       Para<-paste0(Para,"+Con",con.count)
       ParaTE<-paste0(ParaTE,"+Con",con.count)
     }}
-  out.reg<-clm(Y ~ 1, nominal=Para, data=Indata, link="probit")
+  out.reg<-ordinal::clm(Y ~ 1, nominal=Para, data=Indata, link="probit")
   s.reg<-lm(S~.-Y, data=Indata)
   q.reg<-lm(Q~.-S-Y, data=Indata)
   beta.hat<-out.reg$coefficients
@@ -85,7 +88,7 @@ Ord_mediation_analysis_pal=function(Indata, n_cate, confounders, intv=4, intval=
   sig.hat<- c(sigq.hat, sigs.hat)
   Vcov.matrix<-create_vcovmatrix(out.reg,s.reg,q.reg)
 
-  TE<-clm(Y ~ 1-Q-S, nominal=ParaTE, data=Indata, link="probit")$coefficients#total effect
+  TE<-ordinal::clm(Y ~ 1-Q-S, nominal=ParaTE, data=Indata, link="probit")$coefficients#total effect
   ITE<-NULL
   for(para.count in 1:(n_para-2)){
     startat<-(para.count-1)*(n_cate1)
@@ -98,7 +101,7 @@ Ord_mediation_analysis_pal=function(Indata, n_cate, confounders, intv=4, intval=
   if(nb>0){
     nb_r<- nb*1.2
     RNGkind("L'Ecuyer-CMRG")
-    databoot<- mclapply(1:nb_r, "create_data_boot_one", Indata=Indata, mc.cores=n_core, mc.cleanup = TRUE)
+    databoot<- parallel::mclapply(1:nb_r, "create_data_boot_one", Indata=Indata, mc.cores=n_core, mc.cleanup = TRUE)
   }
 
   if(nb>0){
@@ -110,7 +113,7 @@ Ord_mediation_analysis_pal=function(Indata, n_cate, confounders, intv=4, intval=
     }
   }else{
    for(cate.count in 1:(n_cate)){
-   	PSE_a<-PSEa_woboot(Indata, Para=Para, n_para=n_para, n_cate=n_cate, ITE=ITE, theta.hat=theta.hat, sig.hat=sig.hat, Vcov.matrix=Vcov.matrix, intv=intv, intval=intval, confounders=confounders, a=cate.count)
+   	PSE_a<-PSEa_woboot(Para=Para, n_para=n_para, n_cate=n_cate, ITE=ITE, theta.hat=theta.hat, sig.hat=sig.hat, Vcov.matrix=Vcov.matrix, intv=intv, intval=intval, confounders=confounders, a=cate.count)
   	PSE<-cbind(PSE,PSE_a)#;print(PSE)
   	coln_PSE<-c(coln_PSE,paste0("Outcome=",cate.count))#;print(coln_PSE)
   	}

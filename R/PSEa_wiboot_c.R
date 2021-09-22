@@ -11,9 +11,8 @@
 #' @param intval the values of exposure used for intervention. Default is c(0,1)
 #' @param confounders the values of confounders, Default=c()
 #' @param a the value of outcome
-#' @param nb: number of bootstrapping; Default=0
-#' @param n_core: number of cores that will be used
-#'
+#' @param nb number of bootstrapping replicates; Default=0
+#' @param n_core number of cores that will be used
 #' @export PSEa_wiboot_c
 #'
 #' @return p0000: the probability of the counterfactual outcome of the outcome under the intervention=(0,0,0,0)
@@ -24,14 +23,17 @@
 #' @return total RD: the total effect under the risk difference scale
 #' @return total RR: the total effect under the risk ratio scale
 #' @return RD W>Y: the PSE of path from W to Y under the risk difference scale
-#' @return lower(RDWY): the lower bound of the confidence interval the PSE of path from W to Y under the risk difference scale
-#' @return upper(RDWY): the upper bound of the confidence interval the PSE of path from W to Y under the risk difference scale
+#' @return lower(RDWY): the lower bound of the confidence interval for the PSE of path from W to Y under the risk difference scale
+#' @return upper(RDWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk difference scale
 #' @return pv(RDWY): the p-value of the PSE of path from W to Y under the risk difference scale
+#' @return lower_b(RDWY): the lower bound of the confidence interval for the PSE of the path from W to Y under the risk difference scale that produce by bootstrapping
+#' @return upper_b(RDWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
+#' @return pv_b(RDWY): the p-value of the PSE of path from W to Y under the risk difference scale that produce by bootstrapping
 #' @return RR W>Y: the PSE of path from W to Y under the risk ratio scale
-#' @return lower(RRWY): the lower bound of the confidence interval the PSE of path from W to Y under the risk ratio scale
-#' @return upper(RRWY): the upper bound of the confidence interval the PSE of path from W to Y under the risk ratio scale
+#' @return lower(RRWY): the lower bound of the confidence interval for the PSE of path from W to Y under the risk ratio scale
+#' @return upper(RRWY): the upper bound of the confidence interval for the PSE of path from W to Y under the risk ratio scale
 #' @return pv(RRWY): the p-value of the PSE of path from W to Y under the risk ratio scale
-#' @return other return values with the similar names are for the path from W through Q to Y  or through  S, or through both
+#' @return Note: other return values with the similar names are for the path from W through Q to Y  or through  S, or through both
 #'
 PSEa_wiboot_c=function(data_boot, Para, n_para, n_cate, ITE, theta.hat, sig.hat, Vcov.matrix, intv, intval, confounders=c(), a, nb, n_core){
   n_cate1=n_cate-1
@@ -49,7 +51,7 @@ PSEa_wiboot_c=function(data_boot, Para, n_para, n_cate, ITE, theta.hat, sig.hat,
   ###########################################
   repeat{
     RNGkind("L'Ecuyer-CMRG")
-    create_boot_risk<- mclapply(data_boot, "create_boot_risk_one", confounders=confounders, Para=Para, n_cate=n_cate, a=a, intv=intv, intval=intval, mc.cores=n_core, mc.cleanup = TRUE)
+    create_boot_risk<- parallel::mclapply(data_boot, "create_boot_risk_one", confounders=confounders, Para=Para, n_cate=n_cate, a=a, intv=intv, intval=intval, mc.cores=n_core, mc.cleanup = TRUE)
     #create_boot_risk<-lapply(data_boot,"create_boot_risk_one", confounders=confounders, Para=Para, n_cate=n_cate, a=a, intv=intv, intval=intval)
 
     nb_r<- nb*1.2
@@ -136,6 +138,18 @@ PSEa_wiboot_c=function(data_boot, Para, n_para, n_cate, ITE, theta.hat, sig.hat,
   #    pse_values<- c(RD1,RR1,RD2,RR2,RD3,RR3,RD4,RR4)
   #  }
   names(pse_values)<- c("RD W>Y",bdnp,"RR W>Y",bdnp,"RD W>S>Y",bdnp,"RR W>S>Y",bdnp,"RD W>Q>Y",bdnp,"RR W>Q>Y",bdnp,"RD W>Q>S>Y",bdnp,"RR W>Q>S>Y",bdnp)
+
+  pse_name<- NULL
+  path<- c("RDWY", "RRWY", "RDWSY", "RRWSY", "RDWQY", "RRWQY", "RDWQSY", "RRWQSY")
+  bd<- c("lower", "upper", "pv", "lower_b", "upper_b", "pv_b")
+  pathn<- c("RD W>Y", "RR W>Y", "RD W>S>Y", "RR W>S>Y", "RD W>Q>Y", "RR W>Q>Y", "RD W>Q>S>Y", "RR W>Q>S>Y")
+  for(path_count in 1:8){
+    pse_name<- c(pse_name, pathn[path_count])
+    for(bd_count in 1:6){
+      pse_name<- c(pse_name, paste0(bd[bd_count], "(", path[path_count], ")"))
+    }
+  }
+  names(pse_values)<- pse_name
   #}
   ######################################################################
   return(c(rho_values,pse_values))

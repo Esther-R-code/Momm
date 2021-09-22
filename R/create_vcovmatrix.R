@@ -2,8 +2,7 @@
 #' @title create_vcovmatrix
 #' @param out.reg the output of the R function 'clm' i.e. the regression output of the outcome
 #' @param s.reg the output of the R functiom 'lm' under the model of 'S' (the 2nd medistor)
-#' @param q.red the output of the R function 'lm' under the model of 'Q' (the 1st medistor)
-
+#' @param q.reg the output of the R function 'lm' under the model of 'Q' (the 1st medistor)
 #' @export create_vcovmatrix
 
 create_vcovmatrix=function(out.reg,s.reg,q.reg){

@@ -6,7 +6,7 @@
 #' @param TH theta; all of the parameters of the model #list(beta.hat, alpha.hat, delta.hat)
 #' @param SH sigma: all of the estimates of the variance of the mediators
 #' @param Name names of exposure and mediators, def:c("W","Q","S")
-#' @param n_cate1: the number of categories of the outcome minus 1
+#' @param n_cate1 the number of categories of the outcome minus 1
 #' @param a the value of outcome
 #' @param w the values of intervention
 #' @param confounders the values of confounders, def:NULL

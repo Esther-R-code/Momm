@@ -1,5 +1,4 @@
 #' @title PSE without bootstrap
-#' @param data.boot the data set
 #' @param Para the parameter that will trated as nominal variables. Seeting as "~W+Q+S". The detail please see the R function 'clm'
 #' @param n_para the number of pararmeters that used in the model of outcome
 #' @param n_cate the number of categories of the outcome
@@ -29,7 +28,7 @@
 #' @return pv(RRWY): the p-value of the PSE of path from W to Y under the risk ratio scale
 #' @return other return values with the similar names are for the path from W through Q to Y  or through  S, or through both
 
-PSEa_woboot=function(data_boot, Para, n_para, n_cate, ITE, theta.hat, sig.hat, Vcov.matrix, intv, intval, confounders, a){
+PSEa_woboot=function(Para, n_para, n_cate, ITE, theta.hat, sig.hat, Vcov.matrix, intv, intval, confounders, a){
   n_cate1=n_cate-1
   TEa<-NULL
   TEa1<-NULL
