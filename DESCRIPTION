@@ -1,12 +1,16 @@
 Package: momm
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Apply mediation analysis for non-rare orinal/multinomial outcome with two gaussian mediators
 Version: 0.1.0
-Author: Who wrote it
+Author: MinChi Wang
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
 Encoding: UTF-8
-LazyData: true
+LazyData: flase
 RoxygenNote: 7.1.1
+Depends: R (>= 3.6.0)
+Imports: 
+  ordinal , 
+  parallel (>= 3.6.3)
